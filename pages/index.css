@@ -19,5 +19,11 @@
 @import url(../blocks/element/__name/element__name.css);
 @import url(../blocks/element/__button/element__button.css);
 @import url(../blocks/element/__button/_liked/element__button_liked.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__text-input/popup__text-input.css);
+@import url(../blocks/popup/__submit-button/popup__submit-button.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

@@ -9,7 +9,8 @@
   background-position: center;
   padding: 0;
   background-image: url("../../../images/close_icon.svg");
-  margin: -40px 0 0 400px;
+  top: -40px;
+  right: -40px;
 }
 
 .popup__close-button:hover {
@@ -18,7 +19,8 @@
 
 @media (max-width: 480px) {
   .popup__close-button {
-    margin: -40px 0 0 238px;
+    right: 0;
+    top: -36px;
     width: 20px;
     height: 20px;
     background-image: url("../../../images/close_icon_small.svg");

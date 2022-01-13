@@ -7,7 +7,7 @@
     border-bottom: 1px solid #545454;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 900px) {
     .header {
         padding: 28px 27px 0;
         margin: 0;

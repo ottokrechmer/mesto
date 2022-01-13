@@ -6,3 +6,7 @@
   background-position: center;
   padding: 0;
 }
+
+.profile__button:hover {
+  opacity: 60%;
+}

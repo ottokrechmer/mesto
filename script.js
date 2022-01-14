@@ -29,8 +29,3 @@ function editProfile () {
 editButton.addEventListener('click', openPopup)
 popupCloseButton.addEventListener('click', changePopupVisibility)
 popupSubmitButton.addEventListener('click', editProfile)
-popup.addEventListener('keyup', function (event){
-    if (event.keyCode === 13) {
-        popupSubmitButton.click()
-    }
-})

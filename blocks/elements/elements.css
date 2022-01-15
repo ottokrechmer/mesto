@@ -4,3 +4,10 @@
   gap: 17px;
   margin: 51px auto 0;
 }
+
+@media (max-width: 375px) {
+  .elements {
+    row-gap: 20px;
+    margin: 36px auto 0;
+  }
+}

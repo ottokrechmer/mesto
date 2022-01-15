@@ -5,7 +5,6 @@
   grid-template-areas:
   "avatar name"
   "avatar description";
-  max-width: 510px;
   gap: 16px 30px;
 }
 

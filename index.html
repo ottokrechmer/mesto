@@ -16,63 +16,66 @@
       <section class="profile">
         <div class="profile__info">
           <img src="./images/avatar.png" alt="Аватар пользователя" class="profile__avatar">
-          <h1 class="profile__name"><span id="profile__name">Жак-Ив Кусто</span><button class="profile__button profile__button_type_edit"></button></h1>
+          <div class="profile__user">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__button profile__button_type_edit"></button>
+          </div>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__button profile__button_type_add"></button>
+        <button type="button" class="profile__button profile__button_type_add"></button>
       </section>
       <section class="elements">
         <div class="element">
           <img src="images/elements/karachaevsk.png" alt="Карачаевск" class="element__image">
           <div class="element__description">
-            <p class="element__name">Карачаевск</p>
-            <button class="element__button element__button_liked"></button>
+            <h2 class="element__name">Карачаевск</h2>
+            <button type="button" class="element__button element__button_liked"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elements/elbrus.png" alt="Эльбрус" class="element__image">
           <div class="element__description">
-            <p class="element__name">Эльбрус</p>
+            <h2 class="element__name">Эльбрус</h2>
             <button class="element__button"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elements/dombai.png" alt="Домбай" class="element__image">
           <div class="element__description">
-            <p class="element__name">Домбай</p>
+            <h2 class="element__name">Домбай</h2>
             <button class="element__button"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elements/karachaevsk.png" alt="Карачаево-Черкессия" class="element__image">
           <div class="element__description">
-            <p class="element__name">Карачаево-Черкессия</p>
+            <h2 class="element__name">Карачаево-Черкессия</h2>
             <button class="element__button"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elements/elbrus.png" alt="Эльбрус" class="element__image">
           <div class="element__description">
-            <p class="element__name">Эльбрус</p>
+            <h2 class="element__name">Эльбрус</h2>
             <button class="element__button element__button_liked"></button>
           </div>
         </div>
         <div class="element">
           <img src="images/elements/dombai.png" alt="Домбай" class="element__image">
           <div class="element__description">
-            <p class="element__name">Домбай</p>
+            <h2 class="element__name">Домбай</h2>
             <button class="element__button"></button>
           </div>
         </div>
       </section>
       <section class="popup">
-        <div class="popup__container">
-          <button class="popup__close-button"></button>
+        <form class="popup__container">
+          <button type="reset" class="popup__close-button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <input type="text" placeholder="Имя" class="popup__text-input" id="name">
           <input type="text" placeholder="Род занятий" class="popup__text-input" id="description">
-          <button class="popup__submit-button">Сохранить</button>
-        </div>
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
       </section>
     </main>
     <footer class="footer">

@@ -4,7 +4,9 @@
   font-weight: 500;
   grid-area: name;
   margin: 0;
-  align-self: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 767px) {
@@ -18,6 +20,7 @@
     font-weight: 500;
     font-size: 27px;
     line-height: 33px;
+    max-width: 282px;
   }
 }
 

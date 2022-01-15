@@ -4,6 +4,10 @@
   font-weight: 400;
   grid-area: description;
   margin: 0;
+  max-width: 380px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 767px) {
@@ -12,10 +16,11 @@
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 425px) {
   .profile__description {
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
+    max-width: 282px;
   }
 }

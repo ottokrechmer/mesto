@@ -1,8 +1,9 @@
 let content = document.querySelector('.content');
-let username = content.querySelector('#profile__name')
+let username = content.querySelector('.profile__name')
 let userDescription = content.querySelector('.profile__description')
 let editButton = content.querySelector('.profile__button_type_edit')
 let popup = content.querySelector('.popup')
+let popupForm = popup.querySelector('.popup__container')
 let popupCloseButton = popup.querySelector('.popup__close-button')
 let popupSubmitButton = popup.querySelector('.popup__submit-button')
 let usernameInput = popup.querySelector('#name')
@@ -22,10 +23,10 @@ function openPopup () {
 function editProfile () {
     username.textContent = usernameInput.value
     userDescription.textContent = descriptionInput.value
-
+    console.log('HERE')
     changePopupVisibility()
 }
 
 editButton.addEventListener('click', openPopup)
 popupCloseButton.addEventListener('click', changePopupVisibility)
-popupSubmitButton.addEventListener('click', editProfile)
+popupForm.addEventListener('submit', editProfile)

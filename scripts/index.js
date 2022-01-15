@@ -5,7 +5,6 @@ let editButton = content.querySelector('.profile__button_type_edit')
 let popup = content.querySelector('.popup')
 let popupForm = popup.querySelector('.popup__container')
 let popupCloseButton = popup.querySelector('.popup__close-button')
-let popupSubmitButton = popup.querySelector('.popup__submit-button')
 let usernameInput = popup.querySelector('#name')
 let descriptionInput = popup.querySelector('#description')
 
@@ -23,7 +22,7 @@ function openPopup () {
 function editProfile () {
     username.textContent = usernameInput.value
     userDescription.textContent = descriptionInput.value
-    console.log('HERE')
+
     changePopupVisibility()
 }
 

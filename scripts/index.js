@@ -19,7 +19,9 @@ function openPopup () {
     changePopupVisibility()
 }
 
-function editProfile () {
+function editProfile (evt) {
+    evt.preventDefault();
+
     username.textContent = usernameInput.value
     userDescription.textContent = descriptionInput.value
 

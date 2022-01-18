@@ -3,7 +3,7 @@ let username = content.querySelector('.profile__name')
 let userDescription = content.querySelector('.profile__description')
 let editButton = content.querySelector('.profile__button_type_edit')
 let popup = content.querySelector('.popup')
-let popupForm = popup.querySelector('.popup__container')
+let popupForm = popup.querySelector('.popup__form')
 let popupCloseButton = popup.querySelector('.popup__close-button')
 let usernameInput = popup.querySelector('#name')
 let descriptionInput = popup.querySelector('#description')
@@ -19,7 +19,9 @@ function openPopup () {
     changePopupVisibility()
 }
 
-function editProfile () {
+function editProfile (evt) {
+    evt.preventDefault();
+
     username.textContent = usernameInput.value
     userDescription.textContent = descriptionInput.value
 

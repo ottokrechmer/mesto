@@ -34,7 +34,15 @@ const initialCards = [
 const editProfileSaveHandler = (evt) => {
     evt.preventDefault();
     syncInputAndFieldsValues(evt.target, evt.target.popupObject, 'field')
-    changePopupVisibility()
+    changePopupVisibility(evt)
+}
+
+const addElementSaveHandler = (evt) => {
+    evt.preventDefault();
+    const imageName = evt.target.querySelector('#imageName').value;
+    const imageUrl = evt.target.querySelector('#imageUrl').value;
+    addElementToMatrix(imageName, imageUrl)
+    changePopupVisibility(evt)
 }
 
 const popups = [{
@@ -51,19 +59,34 @@ const popups = [{
         placeholder: 'Род занятий',
         relatedFieldSelector: '.profile__description'
     }]
+}, {
+    id: 'add-element',
+    title: 'Новое место',
+    relatedButtonSelector: '.profile__button_type_add',
+    submitHandler: addElementSaveHandler,
+    inputs: [{
+        id: 'imageName',
+        placeholder: 'Название',
+        relatedFieldSelector: null
+    },{
+        id: 'imageUrl',
+        placeholder: 'Ссылка на картинку',
+        relatedFieldSelector: null
+    }]
 }]
 
-function changePopupVisibility (popupObject) {
-    // const popup = content.querySelector('#' + popupObject.id)
-    let popup = content.querySelector('.popup')
-    popup.classList.toggle('popup_opened')
-    // TODO add popupObject
+function openPopup (evt) {
+    syncInputAndFieldsValues(evt.target, evt.target.popupObject, 'input');
+    changePopupVisibility(evt);
 }
 
-function openPopup (evt) {
-    syncInputAndFieldsValues(evt.target, evt.target.popupObject, 'input')
-    changePopupVisibility(evt.target.popupObject)
+function changePopupVisibility (evt) {
+    let popupSection = content.querySelector('.popup')
+    popupSection.classList.toggle('popup_opened')
+    let popup = content.querySelector('#'+evt.target.popupObject.id)
+    popup.classList.toggle('popup__container_opened')
 }
+
 
 function addElementToMatrix (name, url) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
@@ -89,6 +112,10 @@ function syncInputAndFieldsValues(popup, popupObject, from) {
     popupObject.inputs.forEach((item) => {
         const input = document.querySelector('#' + item.id);
         const relatedField = document.querySelector(item.relatedFieldSelector);
+        if (!relatedField) {
+            input.value = ''
+            return
+        }
         if (from === 'input') {
             input.value = relatedField.textContent;
         } else {
@@ -109,7 +136,6 @@ function addPopupToPage(popupObject) {
         const input = inputTemplate.querySelector('.popup__text-input').cloneNode(true);
         input.placeholder = item.placeholder;
         input.id = item.id
-        input.value = content.querySelector(item.relatedFieldSelector).textContent
         popupSubmitButton.before(input)
     })
 
@@ -141,6 +167,3 @@ function setPagePopups() {
 
 setInitialMatrix()
 setPagePopups()
-// editButton.addEventListener('click', openPopup)
-// popupCloseButton.addEventListener('click', changePopupVisibility)
-// popupForm.addEventListener('submit', editProfile)

@@ -70,11 +70,17 @@ function addElementToMatrix (name, url) {
     element.querySelector('.element__image').src = url;
     element.querySelector('.element__image').alt = name;
     element.querySelector('.element__name').textContent = name;
-    const likeButton = element.querySelector('.element__button');
 
-    likeButton.addEventListener('click', function (evt) {
+    const likeButton = element.querySelector('.element__button');
+    likeButton.addEventListener('click', (evt) => {
         evt.target.classList.toggle('element__button_liked');
     });
+
+    const deleteButton = element.querySelector('.element__delete-button');
+    deleteButton.addEventListener('click', (evt) => {
+        const elementToDelete = deleteButton.closest('.element');
+        elementToDelete.remove();
+    })
 
     matrix.prepend(element);
 }

@@ -2,6 +2,7 @@ const content = document.querySelector('.content');
 const popupSection = content.querySelector('.popup')
 const elementTemplate = document.querySelector('#matrix-element-template').content;
 const popupTemplate = document.querySelector('#popup-template').content;
+const imagePopupTemplate = document.querySelector('#popup-image').content;
 const matrix = document.querySelector('.elements');
 
 const initialCards = [
@@ -34,7 +35,7 @@ const initialCards = [
 const editProfileSaveHandler = (evt) => {
     evt.preventDefault();
     syncInputAndFieldsValues(evt.target, evt.target.popupObject, 'field')
-    changePopupVisibility(evt)
+    changePopupVisibility(evt, evt.target.popupObject.id)
 }
 
 const addElementSaveHandler = (evt) => {
@@ -42,7 +43,7 @@ const addElementSaveHandler = (evt) => {
     const imageName = evt.target.querySelector('#imageName').value;
     const imageUrl = evt.target.querySelector('#imageUrl').value;
     addElementToMatrix(imageName, imageUrl)
-    changePopupVisibility(evt)
+    changePopupVisibility(evt, evt.target.popupObject.id)
 }
 
 const popups = [{
@@ -77,21 +78,22 @@ const popups = [{
 
 function openPopup (evt) {
     syncInputAndFieldsValues(evt.target, evt.target.popupObject, 'input');
-    changePopupVisibility(evt);
+    changePopupVisibility(evt, evt.target.popupObject.id);
 }
 
-function changePopupVisibility (evt) {
+function changePopupVisibility (evt, id) {
     let popupSection = content.querySelector('.popup')
     popupSection.classList.toggle('popup_opened')
-    let popup = content.querySelector('#'+evt.target.popupObject.id)
+    let popup = content.querySelector('#'+id)
     popup.classList.toggle('popup__container_opened')
 }
 
 
 function addElementToMatrix (name, url) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
-    element.querySelector('.element__image').src = url;
-    element.querySelector('.element__image').alt = name;
+    const image = element.querySelector('.element__image');
+    image.src = url;
+    image.alt = name;
     element.querySelector('.element__name').textContent = name;
 
     const likeButton = element.querySelector('.element__button');
@@ -103,6 +105,17 @@ function addElementToMatrix (name, url) {
     deleteButton.addEventListener('click', (evt) => {
         const elementToDelete = deleteButton.closest('.element');
         elementToDelete.remove();
+    })
+
+    image.addEventListener('click', (evt) => {
+        const imagePopup = document.querySelector('#big-image')
+        const big_image = imagePopup.querySelector('.popup__image')
+        const text = evt.target.nextElementSibling.firstElementChild.textContent
+        big_image.alt = text
+        big_image.src = evt.target.src
+        imagePopup.querySelector('.popup__description-text').textContent = text
+
+        changePopupVisibility(evt, 'big-image')
     })
 
     matrix.prepend(element);
@@ -147,9 +160,21 @@ function addPopupToPage(popupObject) {
     popupForm.addEventListener('submit', popupObject.submitHandler)
 
     const popupCloseButton = popup.querySelector('.popup__close-button')
-    popupCloseButton.popupObject = popupObject
-    popupCloseButton.addEventListener('click', changePopupVisibility)
+    popupCloseButton.addEventListener('click', (evt) => {
+        changePopupVisibility(evt, popupObject.id)
+    })
 
+    popupSection.append(popup)
+}
+
+function addImagePopupTemplate() {
+    const popup = imagePopupTemplate.querySelector('.popup__container').cloneNode(true);
+    popup.id = 'big-image'
+
+    const popupCloseButton = popup.querySelector('.popup__close-button')
+    popupCloseButton.addEventListener('click', (evt) => {
+        changePopupVisibility(evt, 'big-image')
+    })
     popupSection.append(popup)
 }
 
@@ -167,3 +192,4 @@ function setPagePopups() {
 
 setInitialMatrix()
 setPagePopups()
+addImagePopupTemplate()

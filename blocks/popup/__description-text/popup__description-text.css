@@ -1,0 +1,8 @@
+.popup__description-text {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 0;
+}

@@ -1,9 +1,8 @@
 const content = document.querySelector('.content');
-const popupSection = content.querySelector('.popup')
 const elementTemplate = document.querySelector('#matrix-element-template').content;
 const closeButtons = document.querySelectorAll('.popup__close-button');
 
-const profilePopup = document.querySelector('.popup__container_profile');
+const profilePopup = document.querySelector('.popup-profile');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const userName = profilePopup.querySelector('#userName');
@@ -11,14 +10,15 @@ const userDescription = profilePopup.querySelector('#userDescription');
 const profileEditButton = document.querySelector('.profile__button_type_edit');
 const profilePopupForm = profilePopup.querySelector('.popup__form');
 
-const cardPopup = document.querySelector('.popup__container_card');
+const cardPopup = document.querySelector('.popup-card');
 const imageName = cardPopup.querySelector('#imageName');
 const imageUrl = cardPopup.querySelector('#imageUrl');
 const elementAddButton = document.querySelector('.profile__button_type_add')
 const cardPopupForm = cardPopup.querySelector('.popup__form');
 
-const imagePopup = document.querySelector('.popup__container_image');
+const imagePopup = document.querySelector('.popup-image');
 const bigImage = imagePopup.querySelector('.popup__image');
+const imageDescription = imagePopup.querySelector('.popup__description-text')
 const matrix = document.querySelector('.elements');
 
 const initialCards = [
@@ -49,18 +49,16 @@ const initialCards = [
 ];
 
 function openPopup(popup) {
-    popupSection.classList.add('popup_opened')
-    popup.classList.add('popup__container_opened')
+    popup.classList.add('popup_opened')
 }
 
 function closePopup(popup) {
-    popupSection.classList.remove('popup_opened')
-    popup.classList.remove('popup__container_opened')
+    popup.classList.remove('popup_opened')
 }
 
-function addListenersToAllButtons() {
+function addAllListeners() {
     closeButtons.forEach((item) => {
-        item.addEventListener('click', (evt) => {closePopup(evt.target.parentElement)})
+        item.addEventListener('click', (evt) => {closePopup(evt.target.parentElement.parentElement)})
     });
     profileEditButton.addEventListener('click', (evt => {
         userName.value = profileName.textContent;
@@ -76,14 +74,15 @@ function addListenersToAllButtons() {
     elementAddButton.addEventListener('click', (evt => {openPopup(cardPopup)}));
     cardPopupForm.addEventListener('submit', (evt => {
         evt.preventDefault();
-        addElementToMatrix(imageName.value, imageUrl.value);
+        const element = createMatrixElement(imageName.value, imageUrl.value);
+        matrix.prepend(element)
         imageName.value = '';
         imageUrl.value = '';
         closePopup(cardPopup);
     }));
 }
 
-function addElementToMatrix (name, url) {
+function createMatrixElement (name, url) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
     const image = element.querySelector('.element__image');
     image.src = url;
@@ -104,19 +103,20 @@ function addElementToMatrix (name, url) {
     image.addEventListener('click', (evt) => {
         bigImage.alt = name
         bigImage.src = url
-        imagePopup.querySelector('.popup__description-text').textContent = name
+        imageDescription.textContent = name
 
         openPopup(imagePopup)
     })
 
-    matrix.prepend(element);
+    return element
 }
 
 function setInitialMatrix() {
     initialCards.forEach((item) => {
-        addElementToMatrix(item.name, item.link)
+        const element = createMatrixElement(item.name, item.link)
+        matrix.append(element);
     })
 }
 
 setInitialMatrix()
-addListenersToAllButtons()
+addAllListeners()

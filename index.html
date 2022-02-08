@@ -7,8 +7,7 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
-<body>
-<div class="page">
+<body class="page">
   <header class="header">
     <img class="header__logo" src="./images/logo.svg" alt="Лого">
   </header>
@@ -25,31 +24,35 @@
       <button type="button" class="profile__button profile__button_type_add"></button>
     </section>
     <section class="elements"></section>
-    <section class="popup"></section>
+    <section class="popup">
+      <div class="popup__container popup__container_profile">
+        <button type="reset" class="popup__close-button"></button>
+        <form class="popup__form">
+          <h2 class="popup__title"></h2>
+          <input type="text" placeholder="Имя" class="popup__text-input" id="userName">
+          <input type="text" placeholder="Род занятий" class="popup__text-input" id="userDescription">
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+      <div class="popup__container popup__container_card">
+        <button type="reset" class="popup__close-button"></button>
+        <form class="popup__form">
+          <h2 class="popup__title"></h2>
+          <input type="text" placeholder="Название" class="popup__text-input" id="imageName">
+          <input type="text" placeholder="Ссылка на картинку" class="popup__text-input" id="imageUrl">
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+      <div class="popup__container popup__container_image">
+        <button type="reset" class="popup__close-button"></button>
+        <img class="popup__image">
+        <p class="popup__description-text"></p>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-</div>
-<template id="popup-template">
-  <div class="popup__container">
-    <button type="reset" class="popup__close-button"></button>
-    <form class="popup__form">
-      <h2 class="popup__title"></h2>
-      <button type="submit" class="popup__submit-button">Сохранить</button>
-    </form>
-  </div>
-</template>
-<template id="popup-input">
-  <input type="text" placeholder="" class="popup__text-input" id="">
-</template>
-<template id="popup-image">
-  <div class="popup__container popup__container_image">
-    <button type="reset" class="popup__close-button"></button>
-    <img class="popup__image">
-    <p class="popup__description-text"></p>
-  </div>
-</template>
 <template id="matrix-element-template">
   <div class="element">
     <button type="reset" class="element__delete-button"></button>

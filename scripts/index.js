@@ -58,7 +58,7 @@ function closePopup(popup) {
 
 function addAllListeners() {
     closeButtons.forEach((item) => {
-        item.addEventListener('click', (evt) => {closePopup(evt.target.parentElement.parentElement)})
+        item.addEventListener('click', () => {closePopup(item.closest('.popup'))})
     });
     profileEditButton.addEventListener('click', (evt => {
         userName.value = profileName.textContent;

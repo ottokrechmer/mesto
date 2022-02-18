@@ -12,8 +12,8 @@ const hideInputError = (selectorObject, form, input) => {
     errorElement.textContent = '';
 };
 
-const hasInvalidInput = (InputList) => {
-    return InputList.some((item) => {
+const hasInvalidInput = (inputList) => {
+    return inputList.some((item) => {
         return !item.validity.valid;
     })
 };

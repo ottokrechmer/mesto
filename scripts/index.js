@@ -13,13 +13,14 @@ const profilePopupForm = profilePopup.querySelector('.popup__form');
 const cardPopup = document.querySelector('.popup-card');
 const imageName = cardPopup.querySelector('#imageName');
 const imageUrl = cardPopup.querySelector('#imageUrl');
-const elementAddButton = document.querySelector('.profile__button_type_add')
+const cardPopupSubmitButton = cardPopup.querySelector('.popup__submit-button');
+const cardAddButton = document.querySelector('.profile__button_type_add')
 const cardPopupForm = cardPopup.querySelector('.popup__form');
 
 const imagePopup = document.querySelector('.popup-image');
 const bigImage = imagePopup.querySelector('.popup__image');
 const imageDescription = imagePopup.querySelector('.popup__description-text')
-const matrix = document.querySelector('.elements');
+const cardList = document.querySelector('.elements');
 
 const initialCards = [
     {
@@ -50,27 +51,34 @@ const initialCards = [
 
 function openPopup(popup) {
     popup.classList.add('popup_opened')
+    document.addEventListener('keydown', closePopupOnEscKeydown, popup)
 }
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened')
+    document.removeEventListener('keydown', closePopupOnEscKeydown, false)
 }
 
 function closePopupOnOverlayClick(popup) {
-    if (popup.classList.contains('popup-profile')) {
+    if (popup.classList.contains('popup')) {
         closePopup(popup);
     }
 }
 
+function closePopupOnEscKeydown(evt) {
+    if (evt.key === 'Escape') {
+        const popup = document.querySelector('.popup_opened')
+        closePopup(popup)
+    }
+}
+
 function addAllListeners() {
-    profilePopup.addEventListener('click', (evt) => {closePopupOnOverlayClick(evt.target)})
-    cardPopup.addEventListener('click', (evt) => {closePopupOnOverlayClick(evt.target)})
-    document.addEventListener('keydown', (evt) => {
-        if (evt.key === 'Escape') {
-            closePopup(profilePopup);
-            closePopup(cardPopup);
-        }
-    })
+    // Данная функция была принята на прошлом ревью, видимо, так как выполняет одно действие - навешивает листенеры
+    // Меня даже просили ее переименовать. Насколько критично разбивать ее на части? Код будет смотреться хуже, ИМХО
+
+    profilePopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
+    cardPopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
+    imagePopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
     closeButtons.forEach((item) => {
         item.addEventListener('click', () => {closePopup(item.closest('.popup'))})
     });
@@ -85,18 +93,20 @@ function addAllListeners() {
         profileDescription.textContent = userDescription.value;
         closePopup(profilePopup);
     }));
-    elementAddButton.addEventListener('click', (evt => {openPopup(cardPopup)}));
+    cardAddButton.addEventListener('click', (evt => {
+        cardPopupSubmitButton.classList.add('popup__submit-button_disabled')
+        cardPopupSubmitButton.setAttribute('disabled', 'disabled')
+        openPopup(cardPopup)
+    }));
     cardPopupForm.addEventListener('submit', (evt => {
         evt.preventDefault();
-        const element = createMatrixElement(imageName.value, imageUrl.value);
-        matrix.prepend(element)
-        imageName.value = '';
-        imageUrl.value = '';
+        cardList.prepend(createCard(imageName.value, imageUrl.value))
+        cardPopupForm.reset();
         closePopup(cardPopup);
     }));
 }
 
-function createMatrixElement (name, url) {
+function createCard (name, url) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
     const image = element.querySelector('.element__image');
     image.src = url;
@@ -125,12 +135,11 @@ function createMatrixElement (name, url) {
     return element
 }
 
-function setInitialMatrix() {
+function setInitialCardList() {
     initialCards.forEach((item) => {
-        const element = createMatrixElement(item.name, item.link)
-        matrix.append(element);
+        cardList.append(createCard(item.name, item.link));
     })
 }
 
-setInitialMatrix()
+setInitialCardList()
 addAllListeners()

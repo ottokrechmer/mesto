@@ -1,3 +1,4 @@
 .popup__submit-button_disabled {
   opacity: 10%;
+  cursor: auto;
 }

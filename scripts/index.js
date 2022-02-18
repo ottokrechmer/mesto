@@ -56,7 +56,21 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened')
 }
 
+function closePopupOnOverlayClick(popup) {
+    if (popup.classList.contains('popup-profile')) {
+        closePopup(popup);
+    }
+}
+
 function addAllListeners() {
+    profilePopup.addEventListener('click', (evt) => {closePopupOnOverlayClick(evt.target)})
+    cardPopup.addEventListener('click', (evt) => {closePopupOnOverlayClick(evt.target)})
+    document.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Escape') {
+            closePopup(profilePopup);
+            closePopup(cardPopup);
+        }
+    })
     closeButtons.forEach((item) => {
         item.addEventListener('click', () => {closePopup(item.closest('.popup'))})
     });

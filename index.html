@@ -27,21 +27,25 @@
     <section class="popup popup-profile">
       <div class="popup__container">
         <button type="reset" class="popup__close-button"></button>
-        <form class="popup__form">
+        <form class="popup__form" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" placeholder="Имя" class="popup__text-input" id="userName">
-          <input type="text" placeholder="Род занятий" class="popup__text-input" id="userDescription">
-          <button type="submit" class="popup__submit-button">Сохранить</button>
+          <input type="text" placeholder="Имя" class="popup__text-input" id="userName" minlength="2" maxlength="40" required>
+          <span class="popup__error userName-error"></span>
+          <input type="text" placeholder="Род занятий" class="popup__text-input" id="userDescription" minlength="2" maxlength="200" required>
+          <span class="popup__error userDescription-error"></span>
+          <button type="submit" class="popup__submit-button popup__submit-button_disabled">Сохранить</button>
         </form>
       </div>
     </section>
     <section class="popup popup-card">
       <div class="popup__container">
         <button type="reset" class="popup__close-button"></button>
-        <form class="popup__form">
+        <form class="popup__form" novalidate>
           <h2 class="popup__title">Новое место</h2>
-          <input type="text" placeholder="Название" class="popup__text-input" id="imageName">
-          <input type="text" placeholder="Ссылка на картинку" class="popup__text-input" id="imageUrl">
+          <input type="text" placeholder="Название" class="popup__text-input" id="imageName" minlength="2" maxlength="30" required>
+          <span class="popup__error imageName-error"></span>
+          <input type="url" placeholder="Ссылка на картинку" class="popup__text-input" id="imageUrl" required>
+          <span class="popup__error imageUrl-error"></span>
           <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
       </div>
@@ -67,6 +71,7 @@
     </div>
   </div>
 </template>
-<script src="./scripts/index.js"></script>
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>

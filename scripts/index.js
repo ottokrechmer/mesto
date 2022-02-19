@@ -51,12 +51,12 @@ const initialCards = [
 
 function openPopup(popup) {
     popup.classList.add('popup_opened')
-    document.addEventListener('keydown', closePopupOnEscKeydown, popup)
+    document.addEventListener('keydown', closePopupOnEscKeydown)
 }
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened')
-    document.removeEventListener('keydown', closePopupOnEscKeydown, false)
+    document.removeEventListener('keydown', closePopupOnEscKeydown)
 }
 
 function closePopupOnOverlayClick(popup) {
@@ -73,8 +73,8 @@ function closePopupOnEscKeydown(evt) {
 }
 
 function addAllListeners() {
-    // Данная функция была принята на прошлом ревью, видимо, так как выполняет одно действие - навешивает листенеры
-    // Меня даже просили ее переименовать. Насколько критично разбивать ее на части? Код будет смотреться хуже, ИМХО
+    // Спасибо! Сейчас уже менять не буду, но если в будущем придется разбить, разобью, конечно. Но, пожалуй, Вы правы - функция и правда чуть громоздкая
+    // Видимо, питонячее прошлое подспудно подталкивает писать большие функции :))
 
     profilePopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
     cardPopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));

@@ -1,3 +1,8 @@
+const imagePopup = document.querySelector('.popup-image');
+const bigImage = imagePopup.querySelector('.popup__image');
+const imageDescription = imagePopup.querySelector('.popup__description-text')
+
+
 function openPopup(popup) {
     popup.classList.add('popup_opened')
     document.addEventListener('keydown', closePopupOnEscKeydown)
@@ -21,5 +26,5 @@ function closePopupOnEscKeydown(evt) {
     }
 }
 
-export {openPopup, closePopupOnOverlayClick, closePopupOnEscKeydown, closePopup}
+export {openPopup, closePopupOnOverlayClick, closePopupOnEscKeydown, closePopup, imagePopup, bigImage, imageDescription}
 

@@ -1,8 +1,9 @@
 class FormValidator {
     constructor(selectorObject, form) {
         this._form = form
-        this._inputList = Array.from(this._form.querySelectorAll(`.${selectorObject.inputSelector}`));
-        this._button = this._form.querySelector(`.${selectorObject.submitButtonSelector}`);
+        this._inputList = Array.from(this._form.querySelectorAll(`${selectorObject.inputSelector}`));
+        // Сергей, я несколько раз перечитал ваш комментарий, но так и не понял, что не так :( Я передаю селектор без преобразований - просто обращаюсь к ключу объекта
+        this._button = this._form.querySelector(`${selectorObject.submitButtonSelector}`);
         this._inactiveButtonClass = selectorObject.inactiveButtonClass;
         this._inputErrorClass = selectorObject.inputErrorClass;
         this._errorClassVisible = selectorObject.errorClassVisible;
@@ -17,11 +18,11 @@ class FormValidator {
     };
 
     _setEventListeners() {
-        this._toggleButtonState();
+        this.toggleButtonState();
         this._inputList.forEach((input) => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input);
-                this._toggleButtonState();
+                this.toggleButtonState();
             });
         })
     }
@@ -54,7 +55,7 @@ class FormValidator {
         })
     };
 
-    _toggleButtonState() {
+    toggleButtonState() {
         if (this._hasInvalidInput()) {
             this._button.classList.add(`${this._inactiveButtonClass}`);
             this._button.setAttribute('disabled', 'disabled')

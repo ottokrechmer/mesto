@@ -8,7 +8,7 @@
   font-size: 18px;
   line-height: 22px;
   color: white;
-  margin: 28px 0 25px;
+  margin: 25px 0 25px;
   border-radius: 2px;
 }
 
@@ -20,7 +20,6 @@
 
 @media (max-width: 480px) {
   .popup__submit-button {
-    margin: 25px 0 25px;
     font-size: 14px;
     line-height: 17px;
   }

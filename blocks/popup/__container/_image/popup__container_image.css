@@ -1,12 +1,4 @@
 .popup__container_image {
-  width: 75vw;
-  height: 75vh;
+  position: relative;
   padding: 0;
-}
-
-@media (max-width: 480px) {
-  .popup__container_image {
-    width: 238px;
-    height: 238px;
-  }
 }

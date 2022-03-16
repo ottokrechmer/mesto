@@ -1,8 +1,7 @@
 class FormValidator {
     constructor(selectorObject, form) {
         this._form = form
-        this._inputList = Array.from(this._form.querySelectorAll(`${selectorObject.inputSelector}`));
-        // Сергей, я несколько раз перечитал ваш комментарий, но так и не понял, что не так :( Я передаю селектор без преобразований - просто обращаюсь к ключу объекта
+        this._inputList = Array.from(this._form.querySelectorAll(selectorObject.inputSelector));
         this._button = this._form.querySelector(`${selectorObject.submitButtonSelector}`);
         this._inactiveButtonClass = selectorObject.inactiveButtonClass;
         this._inputErrorClass = selectorObject.inputErrorClass;

@@ -1,9 +1,9 @@
-import {openPopup, closePopupOnOverlayClick, closePopup, imagePopup} from './popupTools.js'
+import {closePopup, closePopupOnOverlayClick, imagePopup, openPopup} from './popupTools.js'
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js'
 
 
-const buttonsClose = document.querySelectorAll('.popup__close-button');
+const buttonCloseList = document.querySelectorAll('.popup__close-button');
 
 const profilePopup = document.querySelector('.popup-profile');
 const profileName = document.querySelector('.profile__name');
@@ -58,22 +58,33 @@ const initialCards = [
     }
 ];
 
+function createCard(name, link) {
+    const cardClass = new Card(name, link, '#matrix-element-template');
+    return cardClass.generateCard();
+}
+
 function renderCard(name, link) {
-    const card = new Card(name, link, '#matrix-element-template');
-    cardList.prepend(card.generateCard());
+    const card = createCard(name, link);
+    cardList.prepend(card);
 }
 
 function addAllListeners(selectorObject) {
     imagePopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
 
+    const profileValidation = new FormValidator(selectorObject, profilePopupForm);
+    const newCardValidation = new FormValidator(selectorObject, cardPopupForm);
+    profileValidation.enableValidation();
+    newCardValidation.enableValidation();
+
     profilePopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
     cardPopup.addEventListener('click', (evt) => closePopupOnOverlayClick(evt.target));
-    buttonsClose.forEach((item) => {
+    buttonCloseList.forEach((item) => {
         item.addEventListener('click', () => {closePopup(item.closest('.popup'))})
     });
     profileEditButton.addEventListener('click', (evt => {
         userName.value = profileName.textContent;
         userDescription.value = profileDescription.textContent;
+        profileValidation.toggleButtonState();
         openPopup(profilePopup);
     }));
     profilePopupForm.addEventListener('submit', (evt => {
@@ -83,10 +94,7 @@ function addAllListeners(selectorObject) {
         closePopup(profilePopup);
     }));
     cardAddButton.addEventListener('click', (evt => {
-        const formSection = document.querySelector('.popup-card');
-        const form = formSection.querySelector(`${selectorObject.formSelector}`)
-        const formValidator = new FormValidator(selectorObject, form);
-        formValidator.toggleButtonState();
+        newCardValidation.toggleButtonState();
         openPopup(cardPopup)
     }));
     cardPopupForm.addEventListener('submit', (evt => {
@@ -102,17 +110,6 @@ function setInitialCardList() {
         renderCard(item.name, item.link);
     })
 }
-
-function enableValidation(selectorObject) {
-    // И снова прошу прощения, но не понял, зачем делать две формы отдельными переменными?
-    const formList = Array.from(document.querySelectorAll(`${selectorObject.formSelector}`));
-    formList.forEach((form) => {
-        const newForm = new FormValidator(selectorObject, form)
-        newForm.enableValidation()
-    });
-}
-
-enableValidation(selectorObject);
 
 setInitialCardList()
 addAllListeners(selectorObject)

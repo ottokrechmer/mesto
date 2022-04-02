@@ -6,7 +6,9 @@ import PopupWithImage from "./scripts/components/PopupWithImage";
 import PopupWithForm from "./scripts/components/PopupWithForm";
 import UserInfo from "./scripts/components/UserInfo";
 
+
 const cardRenderer = (element) => {
+    console.log(element)
     const card = new Card({
         name: element.name,
         url: element.link,
@@ -45,18 +47,19 @@ const profilePopup = new PopupWithForm({
 const addCardPopup = new PopupWithForm({
     submitHandler: (evt) => {
         evt.preventDefault();
+        const values = addCardPopup._getInputValues();
         cardRenderer({
-            name: imageName,
-            url: imageUrl
-        })
+            name: values.imageName,
+            link: values.imageUrl
+        });
         addCardPopup.close();
     }
 }, cardPopupSelector)
 
 function setButtonsEventListeners() {
-    // cardAddButton.addEventListener('click', (evt) => {
-        
-    // })
+    cardAddButton.addEventListener('click', (evt => {
+        addCardPopup.open();
+    }));
     profileEditButton.addEventListener('click', (evt => {
         profilePopup.setInitialValues({
             userName: profileName.textContent,
@@ -64,6 +67,7 @@ function setButtonsEventListeners() {
         })
         profilePopup.open();
     }));
+    addCardPopup.setEventListeners();
     profilePopup.setEventListeners();
 }
 

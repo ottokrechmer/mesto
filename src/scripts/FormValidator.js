@@ -1,11 +1,13 @@
-class FormValidator {
-    constructor(selectorObject, form) {
+import { inactiveButtonClass, popupTextInputSelector, submitButtonSelector, inputErrorClass, errorClassVisible } from "./utils/constants";
+
+export default class FormValidator {
+    constructor(form) {
         this._form = form
-        this._inputList = Array.from(this._form.querySelectorAll(selectorObject.inputSelector));
-        this._button = this._form.querySelector(`${selectorObject.submitButtonSelector}`);
-        this._inactiveButtonClass = selectorObject.inactiveButtonClass;
-        this._inputErrorClass = selectorObject.inputErrorClass;
-        this._errorClassVisible = selectorObject.errorClassVisible;
+        this._inputList = Array.from(this._form.querySelectorAll(popupTextInputSelector));
+        this._button = this._form.querySelector(submitButtonSelector);
+        this._inactiveButtonClass = inactiveButtonClass;
+        this._inputErrorClass = inputErrorClass;
+        this._errorClassVisible = errorClassVisible;
     }
 
     enableValidation() {
@@ -65,4 +67,3 @@ class FormValidator {
     };
 }
 
-export {FormValidator}

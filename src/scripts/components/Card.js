@@ -1,10 +1,8 @@
-import {closePopupOnOverlayClick, openPopup, imagePopup, bigImage, imageDescription} from './popupTools.js'
-
-
-class Card {
-    constructor(name, url, templateSelector) {
+export default class Card {
+    constructor({name, url, handleCardClick}, templateSelector) {
         this._name = name;
         this._url = url;
+        this._handleCardClick = handleCardClick;
         this._templateSelector = templateSelector;
     }
 
@@ -41,13 +39,7 @@ class Card {
         });
 
         this._image.addEventListener('click', (evt) => {
-            bigImage.alt = this._name;
-            bigImage.src = this._url;
-            imageDescription.textContent = this._name;
-
-            openPopup(imagePopup)
+            this._handleCardClick(this._name, this._url)
         })
     }
 }
-
-export {Card}

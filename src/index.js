@@ -1,6 +1,7 @@
-import {closePopup, closePopupOnOverlayClick, imagePopup, openPopup} from './popupTools.js'
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js'
+import {closePopup, closePopupOnOverlayClick, imagePopup, openPopup} from './scripts/popupTools.js'
+import {Card} from './scripts/Card.js';
+import {FormValidator} from './scripts/FormValidator.js'
+import './pages/index.css';
 
 
 const buttonCloseList = document.querySelectorAll('.popup__close-button');

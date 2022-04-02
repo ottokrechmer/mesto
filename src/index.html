@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Krechmer">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logo.svg" alt="Лого">
+    <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Лого">
   </header>
   <main class="content">
     <section class="profile">
       <div class="profile__info">
-        <img src="./images/avatar.png" alt="Аватар пользователя" class="profile__avatar">
+        <img src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя" class="profile__avatar">
         <div class="profile__user">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__button profile__button_type_edit"></button>

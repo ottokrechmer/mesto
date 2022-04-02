@@ -8,7 +8,6 @@ import UserInfo from "./scripts/components/UserInfo";
 
 
 const cardRenderer = (element) => {
-    console.log(element)
     const card = new Card({
         name: element.name,
         url: element.link,

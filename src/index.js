@@ -1,25 +1,42 @@
 import Card from "./scripts/components/Card";
 import Section from "./scripts/components/Section";
-import { cardAddButton, cardListSelector, cardPopupSelector, initialCards, matrixTemplateSelector, popupImageSelector, profileDescription, profileEditButton, profileName, profilePopupSelector } from "./scripts/utils/constants";
+import { cardAddButton, 
+    cardListSelector,
+    cardPopupSelector,
+    initialCards, 
+    matrixTemplateSelector, 
+    popupImageSelector, 
+    profileDescriptionSelector, 
+    profileEditButton, 
+    profileNameSelector, 
+    profilePopupSelector,
+    inactiveButtonClass, 
+    popupTextInputSelector, 
+    submitButtonSelector, 
+    inputErrorClass, 
+    errorClassVisible } from "./scripts/utils/constants";
 import './pages/index.css';
 import PopupWithImage from "./scripts/components/PopupWithImage";
 import PopupWithForm from "./scripts/components/PopupWithForm";
 import UserInfo from "./scripts/components/UserInfo";
+import FormValidator from "./scripts/components/FormValidator";
 
 
-const cardRenderer = (element) => {
-    const card = new Card({
+const imagePopup = new PopupWithImage(popupImageSelector);
+
+function createCard(element) {
+    return new Card({
         name: element.name,
         url: element.link,
         handleCardClick: (name, url) => {
-            const popup = new PopupWithImage({
-                imageName: name,
-                imageUrl: url
-            }, popupImageSelector)
-            popup.open();
-            popup.setEventListeners();
+            imagePopup.open(name, url);
+            imagePopup.setEventListeners();
         }
     }, matrixTemplateSelector)
+}
+
+const cardRenderer = (element) => {
+    const card = createCard(element);
     const cardElement = card.generateCard();
     section.addItem(cardElement);
 }
@@ -33,13 +50,22 @@ function setInitialCardList() {
     section.render();
 }
 
-const userInfo = new UserInfo();
+const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector);
 
 const profilePopup = new PopupWithForm({
     submitHandler: (evt) => {
         evt.preventDefault();
+        // Не очень понял замечание - параметры же возвращает функция _getInputValues
         userInfo.setUserInfo(profilePopup._getInputValues());
         profilePopup.close();
+    },
+    validationHandler: (popupForm) => {
+        return new FormValidator({
+            inactiveButtonClass, 
+            popupTextInputSelector, 
+            submitButtonSelector, 
+            inputErrorClass, 
+            errorClassVisible}, popupForm)
     }
 }, profilePopupSelector)
 
@@ -52,6 +78,14 @@ const addCardPopup = new PopupWithForm({
             link: values.imageUrl
         });
         addCardPopup.close();
+    },
+    validationHandler: (popupForm) => {
+        return new FormValidator({
+            inactiveButtonClass, 
+            popupTextInputSelector, 
+            submitButtonSelector, 
+            inputErrorClass, 
+            errorClassVisible}, popupForm)
     }
 }, cardPopupSelector)
 
@@ -60,10 +94,7 @@ function setButtonsEventListeners() {
         addCardPopup.open();
     }));
     profileEditButton.addEventListener('click', (evt => {
-        profilePopup.setInitialValues({
-            userName: profileName.textContent,
-            userDescription: profileDescription.textContent
-        })
+        profilePopup.setInitialValues(userInfo.getUserInfo())
         profilePopup.open();
     }));
     addCardPopup.setEventListeners();

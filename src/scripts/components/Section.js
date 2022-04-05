@@ -10,7 +10,6 @@ export default class Section {
     }
 
     render() {
-        this._clear();
         this._items.forEach(element => {
             this._renderer(element);
         });

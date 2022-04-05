@@ -35,8 +35,8 @@ export const cardAddButton = document.querySelector('.profile__button_type_add')
 
 export const profileEditButton = document.querySelector('.profile__button_type_edit');
 export const profilePopupSelector = '.popup-profile';
-export const profileName = document.querySelector('.profile__name');
-export const profileDescription = document.querySelector('.profile__description');
+export const profileNameSelector = '.profile__name';
+export const profileDescriptionSelector = '.profile__description';
 
 export const cardPopupSelector = '.popup-card';
 

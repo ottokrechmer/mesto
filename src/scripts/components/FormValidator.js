@@ -1,17 +1,14 @@
-import { inactiveButtonClass, popupTextInputSelector, submitButtonSelector, inputErrorClass, errorClassVisible } from "./utils/constants";
-
 export default class FormValidator {
-    constructor(form) {
+    constructor(data, form) {
         this._form = form
-        this._inputList = Array.from(this._form.querySelectorAll(popupTextInputSelector));
-        this._button = this._form.querySelector(submitButtonSelector);
-        this._inactiveButtonClass = inactiveButtonClass;
-        this._inputErrorClass = inputErrorClass;
-        this._errorClassVisible = errorClassVisible;
+        this._inputList = Array.from(this._form.querySelectorAll(data.popupTextInputSelector));
+        this._button = this._form.querySelector(data.submitButtonSelector);
+        this._inactiveButtonClass = data.inactiveButtonClass;
+        this._inputErrorClass = data.inputErrorClass;
+        this._errorClassVisible = data.errorClassVisible;
     }
 
     enableValidation() {
-        this._form.setAttribute('novalidate', 'novalidate')
         this._form.addEventListener('submit', function (evt) {
             evt.preventDefault();
         });
@@ -55,6 +52,10 @@ export default class FormValidator {
             return !item.validity.valid;
         })
     };
+
+    toggleInputState() {
+        this._inputList.forEach((input) => {this._checkInputValidity(input)})
+    }
 
     toggleButtonState() {
         if (this._hasInvalidInput()) {

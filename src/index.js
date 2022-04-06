@@ -53,10 +53,9 @@ function setInitialCardList() {
 const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector);
 
 const profilePopup = new PopupWithForm({
-    submitHandler: (evt) => {
-        evt.preventDefault();
+    submitHandler: (inputValues) => {
         // Не очень понял замечание - параметры же возвращает функция _getInputValues
-        userInfo.setUserInfo(profilePopup._getInputValues());
+        userInfo.setUserInfo(inputValues);
         profilePopup.close();
     },
     validationHandler: (popupForm) => {
@@ -70,12 +69,10 @@ const profilePopup = new PopupWithForm({
 }, profilePopupSelector)
 
 const addCardPopup = new PopupWithForm({
-    submitHandler: (evt) => {
-        evt.preventDefault();
-        const values = addCardPopup._getInputValues();
+    submitHandler: (inputValues) => {
         cardRenderer({
-            name: values.imageName,
-            link: values.imageUrl
+            name: inputValues.imageName,
+            link: inputValues.imageUrl
         });
         addCardPopup.close();
     },
@@ -92,10 +89,12 @@ const addCardPopup = new PopupWithForm({
 function setButtonsEventListeners() {
     cardAddButton.addEventListener('click', (evt => {
         addCardPopup.open();
+        addCardPopup.validationClass.toggleInputState();
     }));
     profileEditButton.addEventListener('click', (evt => {
         profilePopup.setInitialValues(userInfo.getUserInfo())
         profilePopup.open();
+        profilePopup.validationClass.toggleInputState();
     }));
     addCardPopup.setEventListeners();
     profilePopup.setEventListeners();

@@ -1,13 +1,13 @@
 import Card from "./scripts/components/Card";
 import Section from "./scripts/components/Section";
-import { cardAddButton, 
+import { cardAddButtonSelector, 
     cardListSelector,
     cardPopupSelector,
     initialCards, 
     matrixTemplateSelector, 
     popupImageSelector, 
     profileDescriptionSelector, 
-    profileEditButton, 
+    profileEditButtonSelector, 
     profileNameSelector, 
     profilePopupSelector,
     inactiveButtonClass, 
@@ -85,6 +85,10 @@ const addCardPopup = new PopupWithForm({
             errorClassVisible}, popupForm)
     }
 }, cardPopupSelector)
+
+const profileEditButton = document.querySelector(profileEditButtonSelector);
+const cardAddButton = document.querySelector(cardAddButtonSelector);
+
 
 function setButtonsEventListeners() {
     cardAddButton.addEventListener('click', (evt => {

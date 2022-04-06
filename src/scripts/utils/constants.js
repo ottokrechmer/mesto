@@ -29,11 +29,9 @@ export const closeButtonSelector = '.popup__close-button';
 export const popupOpenedSelector = 'popup_opened';
 
 export const popupImageSelector = '.popup-image'
-export const bigImage = document.querySelector('.popup__image');
-export const imageDescription = document.querySelector('.popup__description-text')
-export const cardAddButton = document.querySelector('.profile__button_type_add')
+export const cardAddButtonSelector = '.profile__button_type_add';
 
-export const profileEditButton = document.querySelector('.profile__button_type_edit');
+export const profileEditButtonSelector = '.profile__button_type_edit';
 export const profilePopupSelector = '.popup-profile';
 export const profileNameSelector = '.profile__name';
 export const profileDescriptionSelector = '.profile__description';

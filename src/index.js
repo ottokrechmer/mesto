@@ -23,86 +23,84 @@ import FormValidator from "./scripts/components/FormValidator";
 
 
 const imagePopup = new PopupWithImage(popupImageSelector);
-
-function createCard(element) {
-    return new Card({
-        name: element.name,
-        url: element.link,
-        handleCardClick: (name, url) => {
-            imagePopup.open(name, url);
-            imagePopup.setEventListeners();
-        }
-    }, matrixTemplateSelector)
-}
-
-const cardRenderer = (element) => {
-    const card = createCard(element);
-    const cardElement = card.generateCard();
-    section.addItem(cardElement);
-}
-
+const profileEditButton = document.querySelector(profileEditButtonSelector);
+const cardAddButton = document.querySelector(cardAddButtonSelector);
+const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector);
 const section = new Section({
     items: initialCards,
     renderer: cardRenderer
 }, cardListSelector)
-
-function setInitialCardList() {
-    section.render();
-}
-
-const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector);
-
-const profilePopup = new PopupWithForm({
-    submitHandler: (inputValues) => {
-        // Не очень понял замечание - параметры же возвращает функция _getInputValues
+const profilePopup = new PopupWithForm(
+    function (inputValues) {
         userInfo.setUserInfo(inputValues);
         profilePopup.close();
-    },
-    validationHandler: (popupForm) => {
-        return new FormValidator({
-            inactiveButtonClass, 
-            popupTextInputSelector, 
-            submitButtonSelector, 
-            inputErrorClass, 
-            errorClassVisible}, popupForm)
-    }
-}, profilePopupSelector)
+    }, profilePopupSelector)
 
-const addCardPopup = new PopupWithForm({
-    submitHandler: (inputValues) => {
+const profilePopupValidator = new FormValidator({
+    inactiveButtonClass, 
+    popupTextInputSelector, 
+    submitButtonSelector, 
+    inputErrorClass, 
+    errorClassVisible}, '.popup-profile'
+)
+const addCardPopup = new PopupWithForm(
+    function (inputValues) {
         cardRenderer({
             name: inputValues.imageName,
             link: inputValues.imageUrl
         });
         addCardPopup.close();
-    },
-    validationHandler: (popupForm) => {
-        return new FormValidator({
-            inactiveButtonClass, 
-            popupTextInputSelector, 
-            submitButtonSelector, 
-            inputErrorClass, 
-            errorClassVisible}, popupForm)
-    }
-}, cardPopupSelector)
+    }, cardPopupSelector)
 
-const profileEditButton = document.querySelector(profileEditButtonSelector);
-const cardAddButton = document.querySelector(cardAddButtonSelector);
+const addCardPopupValidator = new FormValidator({
+    inactiveButtonClass, 
+    popupTextInputSelector, 
+    submitButtonSelector, 
+    inputErrorClass, 
+    errorClassVisible}, '.popup-card'
+)
 
 
-function setButtonsEventListeners() {
+function createCard(element) {
+    const card = new Card({
+        name: element.name,
+        url: element.link,
+        handleCardClick: (name, url) => {
+            imagePopup.open(name, url);
+        }
+    }, matrixTemplateSelector)
+    return card.generateCard();
+}
+
+function cardRenderer(element) {
+    const cardElement = createCard(element);
+    section.addItem(cardElement);
+}
+
+function setInitialCardList() {
+    section.render();
+}
+
+function setEventListeners() {
     cardAddButton.addEventListener('click', (evt => {
         addCardPopup.open();
-        addCardPopup.validationClass.toggleInputState();
+        addCardPopupValidator.toggleInputState();
     }));
     profileEditButton.addEventListener('click', (evt => {
         profilePopup.setInitialValues(userInfo.getUserInfo())
         profilePopup.open();
-        profilePopup.validationClass.toggleInputState();
+        profilePopupValidator.toggleInputState();
     }));
     addCardPopup.setEventListeners();
     profilePopup.setEventListeners();
+    imagePopup.setEventListeners();
+}
+
+function enableValidation() {
+    profilePopupValidator.enableValidation();
+    addCardPopupValidator.enableValidation();
 }
 
 setInitialCardList();
-setButtonsEventListeners();
+setEventListeners();
+enableValidation();

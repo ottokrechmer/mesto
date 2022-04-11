@@ -1,14 +1,11 @@
-import { popupTextInputSelector, popupFormSelector } from "../utils/constants";
 import Popup from "./Popup";
 
 export default class PopupWithForm extends Popup {
-    constructor({submitHandler, validationHandler}, popupSelector) {
+    constructor(submitHandler, popupSelector) {
         super(popupSelector);
         this._submitHandler = submitHandler;
-        this._inputList = this._popup.querySelectorAll(popupTextInputSelector);
-        this._popupForm = this._popup.querySelector(popupFormSelector);
-        this.validationClass = validationHandler(this._popupForm);
-        this.validationClass.enableValidation();
+        this._inputList = this._popup.querySelectorAll('.popup__text-input');
+        this._popupForm = this._popup.querySelector('.popup__form');
     }
 
     _getInputValues() {
@@ -28,7 +25,6 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners();
         this._popup.addEventListener('submit', (evt) => {
-            evt.preventDefault();
             this._submitHandler(this._getInputValues());
         })
     }

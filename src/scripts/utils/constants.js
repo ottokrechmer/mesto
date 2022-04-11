@@ -25,9 +25,6 @@ export const initialCards = [
     }
 ];
 
-export const closeButtonSelector = '.popup__close-button';
-export const popupOpenedSelector = 'popup_opened';
-
 export const popupImageSelector = '.popup-image'
 export const cardAddButtonSelector = '.profile__button_type_add';
 

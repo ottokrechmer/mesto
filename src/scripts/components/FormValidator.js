@@ -1,6 +1,6 @@
 export default class FormValidator {
-    constructor(data, form) {
-        this._form = form
+    constructor(data, popupSelector) {
+        this._form = document.querySelector(popupSelector).querySelector('.popup__form')
         this._inputList = Array.from(this._form.querySelectorAll(data.popupTextInputSelector));
         this._button = this._form.querySelector(data.submitButtonSelector);
         this._inactiveButtonClass = data.inactiveButtonClass;
@@ -54,7 +54,7 @@ export default class FormValidator {
     };
 
     toggleInputState() {
-        this._inputList.forEach((input) => {this._checkInputValidity(input)})
+        this._inputList.forEach((input) => {this._hideInputError(input)})
     }
 
     toggleButtonState() {

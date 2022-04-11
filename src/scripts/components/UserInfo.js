@@ -1,5 +1,3 @@
-import { profileDescription, profileName } from "../utils/constants";
-
 export default class UserInfo {
     constructor(profileNameSelector, profileDescriptionSelector) {
         this._profileName = document.querySelector(profileNameSelector);

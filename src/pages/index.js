@@ -1,5 +1,5 @@
-import Card from "./scripts/components/Card";
-import Section from "./scripts/components/Section";
+import Card from "../scripts/components/Card";
+import Section from "../scripts/components/Section";
 import { cardAddButtonSelector, 
     cardListSelector,
     cardPopupSelector,
@@ -14,12 +14,12 @@ import { cardAddButtonSelector,
     popupTextInputSelector, 
     submitButtonSelector, 
     inputErrorClass, 
-    errorClassVisible } from "./scripts/utils/constants";
-import './pages/index.css';
-import PopupWithImage from "./scripts/components/PopupWithImage";
-import PopupWithForm from "./scripts/components/PopupWithForm";
-import UserInfo from "./scripts/components/UserInfo";
-import FormValidator from "./scripts/components/FormValidator";
+    errorClassVisible } from "../scripts/utils/constants";
+import './index.css';
+import PopupWithImage from "../scripts/components/PopupWithImage";
+import PopupWithForm from "../scripts/components/PopupWithForm";
+import UserInfo from "../scripts/components/UserInfo";
+import FormValidator from "../scripts/components/FormValidator";
 
 
 const imagePopup = new PopupWithImage(popupImageSelector);

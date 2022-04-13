@@ -1,5 +1,3 @@
-// Прямо в курсе нас учили, что константы должны быть вынесены: http://joxi.ru/krDP4RaHGJRnJr в отдельный модуль :(
-
 export default class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
@@ -19,9 +17,7 @@ export default class Popup {
     }
 
     setEventListeners() {
-        // Я сделал как вы советовали, не работает. Он даже не заходит в функциию _handleOverlayClickClose
-        // this._popup.addEventListener('click', () => this._handleOverlayClickClose);
-        this._popup.addEventListener('click', this._handleOverlayClickClose.bind(this));
+        this._popup.addEventListener('click', (evt) => this._handleOverlayClickClose(evt));
         this._closeButton.addEventListener('click', this.close.bind(this));
     }
 

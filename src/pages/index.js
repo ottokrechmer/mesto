@@ -3,7 +3,6 @@ import Section from "../scripts/components/Section";
 import { cardAddButtonSelector, 
     cardListSelector,
     cardPopupSelector,
-    initialCards, 
     matrixTemplateSelector, 
     popupImageSelector, 
     profileDescriptionSelector, 

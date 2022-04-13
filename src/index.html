@@ -14,7 +14,7 @@
     <section class="profile">
       <div class="profile__info">
         <div class="profile__avatar-container">
-          <img src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя" class="profile__avatar">
+          <img src="https://pictures.s3.yandex.net/frontend-developer/common/ava.jpg" alt="Аватар пользователя" class="profile__avatar">
           <img src="<%=require('./images/avatar-edit.svg')%>" alt="Изменить аватар" class="profile__avatar-edit">
         </div>
         <div class="profile__user">
@@ -39,6 +39,17 @@
         </form>
       </div>
     </section>
+    <section class="popup popup-avatar">
+      <div class="popup__container popup__container_type_avatar">
+        <button type="reset" class="popup__close-button"></button>
+        <form class="popup__form" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input type="url" placeholder="Ссылка на картинку" class="popup__text-input" id="avatarUrl" required>
+          <span class="popup__error avatarUrl-error"></span>
+          <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
     <section class="popup popup-card">
       <div class="popup__container">
         <button type="reset" class="popup__close-button"></button>
@@ -58,17 +69,6 @@
         <form class="popup__form" novalidate>
           <h2 class="popup__title">Вы уверены?</h2>
           <button type="submit" class="popup__submit-button">Да</button>
-        </form>
-      </div>
-    </section>
-    <section class="popup popup-avatar">
-      <div class="popup__container">
-        <button type="reset" class="popup__close-button"></button>
-        <form class="popup__form" novalidate>
-          <h2 class="popup__title">Обновить аватар</h2>
-          <input type="url" placeholder="Ссылка на картинку" class="popup__text-input" id="avatarUrl" required>
-          <span class="popup__error imageUrl-error"></span>
-          <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
       </div>
     </section>

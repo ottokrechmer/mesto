@@ -15,7 +15,9 @@ import { cardAddButtonSelector,
     submitButtonSelector, 
     inputErrorClass, 
     errorClassVisible, 
-    deletePopupSelector} from "../scripts/utils/constants";
+    deletePopupSelector,
+    avatarSelector,
+    avatarPopupSelector} from "../scripts/utils/constants";
 import './index.css';
 import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
@@ -27,11 +29,27 @@ import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation";
 const imagePopup = new PopupWithImage(popupImageSelector);
 const profileEditButton = document.querySelector(profileEditButtonSelector);
 const cardAddButton = document.querySelector(cardAddButtonSelector);
-const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector);
+const avatar = document.querySelector(avatarSelector);
+const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector, avatarSelector);
 const section = new Section({
     items: initialCards,
     renderer: cardRenderer
 }, cardListSelector)
+
+const avatarPopup = new PopupWithForm(
+    function (inputValues) {
+        userInfo.setUserAvatar(inputValues);
+        avatarPopup.close();
+    }, avatarPopupSelector)
+
+const avatarPopupValidator = new FormValidator({
+    inactiveButtonClass, 
+    popupTextInputSelector, 
+    submitButtonSelector, 
+    inputErrorClass, 
+    errorClassVisible}, '.popup-avatar'
+)
+
 const profilePopup = new PopupWithForm(
     function (inputValues) {
         userInfo.setUserInfo(inputValues);
@@ -102,15 +120,22 @@ function setEventListeners() {
         profilePopup.open();
         profilePopupValidator.toggleInputState();
     }));
+    avatar.addEventListener('click', (evt => {
+        avatarPopup.setInitialValues(userInfo.getUserAvatar())
+        avatarPopup.open();
+        avatarPopupValidator.toggleInputState();
+    }));
     addCardPopup.setEventListeners();
     profilePopup.setEventListeners();
     imagePopup.setEventListeners();
+    avatarPopup.setEventListeners();
     deleteConfigmationPopup.setEventListeners();
 }
 
 function enableValidation() {
     profilePopupValidator.enableValidation();
     addCardPopupValidator.enableValidation();
+    avatarPopupValidator.enableValidation();
 }
 
 setInitialCardList();

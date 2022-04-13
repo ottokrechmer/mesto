@@ -32,6 +32,8 @@ export const profileEditButtonSelector = '.profile__button_type_edit';
 export const profilePopupSelector = '.popup-profile';
 export const profileNameSelector = '.profile__name';
 export const profileDescriptionSelector = '.profile__description';
+export const avatarSelector = '.profile__avatar'
+export const avatarPopupSelector = '.popup-avatar'
 
 export const cardPopupSelector = '.popup-card';
 

@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({data, handleCardClick, handleDeleteClick}, templateSelector, userId) {
+    constructor({data, handleCardClick, handleDeleteClick, handleLikeClick}, templateSelector, userId) {
         this._name = data.name;
         this._url = data.link;
         this._owner = data.owner;
@@ -7,6 +7,7 @@ export default class Card {
         this.cardId = data._id
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
+        this._handleLikeClick = handleLikeClick;
         this._templateSelector = templateSelector;
         this._userId = userId;
     }
@@ -29,6 +30,7 @@ export default class Card {
         this._element = this._getTemplate();
         this._likeButton = this._element.querySelector('.element__button');
         if (this._checkIsLikedByUser()) {
+            this._isLiked = true
             this._likeButton.classList.add('element__button_liked');
         }
         this._deleteButton = this._element.querySelector('.element__delete-button');
@@ -36,7 +38,8 @@ export default class Card {
         this._image.src = this._url;
         this._image.alt = this._name;
         this._element.querySelector('.element__name').textContent = this._name;
-        this._element.querySelector('.element__like-count').textContent = this._likes.length;
+        this._likeCount = this._element.querySelector('.element__like-count')
+        this._likeCount.textContent = this._likes.length;
         this._setEventListeners();
 
         if (this._owner._id != this._userId) {
@@ -48,11 +51,11 @@ export default class Card {
 
     _setEventListeners() {
         this._likeButton.addEventListener('click', (evt) => {
-            this._likeButton.classList.toggle('element__button_liked');
+            this._handleLikeClick(this);
         });
 
         this._deleteButton.addEventListener('click', (evt) => {
-            this._handleDeleteClick(this._element, this.cardId);
+            this._handleDeleteClick(this);
         });
 
         this._image.addEventListener('click', (evt) => {

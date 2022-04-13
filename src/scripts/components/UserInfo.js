@@ -29,7 +29,7 @@ export default class UserInfo {
         return this._id
     }
 
-    setUserAvatar({avatarUrl}) {
+    setUserAvatar(avatarUrl) {
         this._avatar.src = avatarUrl;
     }
 }

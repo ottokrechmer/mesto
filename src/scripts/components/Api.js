@@ -56,4 +56,31 @@ export default class Api {
         })
         .then(this._parseResponse); 
     }
+
+    addLikeToCard(cardId) {
+        return fetch(this._baseUrl.concat(`/cards/${cardId}/likes`), {
+            method: 'PUT',
+            headers: this._headers
+        })
+        .then(this._parseResponse); 
+    }
+
+    removeLikeFromCard(cardId) {
+        return fetch(this._baseUrl.concat(`/cards/${cardId}/likes`), {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(this._parseResponse); 
+    }
+
+    editUserAvatar(avatar) {
+        return fetch(this._baseUrl.concat('/users/me/avatar'), {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: avatar
+            })
+        })
+        .then(this._parseResponse); 
+    }
 }

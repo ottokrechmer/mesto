@@ -44,7 +44,17 @@ const section = new Section({
 
 const avatarPopup = new PopupWithForm(
     function (inputValues) {
-        userInfo.setUserAvatar(inputValues);
+        avatarPopup._submitButton.textContent = 'Сохранение...'
+        api.editUserAvatar(inputValues.avatarUrl)
+            .then((res) => {
+                userInfo.setUserAvatar(res.avatar);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                avatarPopup._submitButton.textContent = 'Сохранить'
+            });
         avatarPopup.close();
     }, avatarPopupSelector)
 
@@ -58,13 +68,17 @@ const avatarPopupValidator = new FormValidator({
 
 const profilePopup = new PopupWithForm(
     function (inputValues) {
+        profilePopup._submitButton.textContent = 'Сохранение...'
         api.editUserProfile(inputValues.userName, inputValues.userDescription)
             .then((res) => {
                 userInfo.setUserInfo(res.name, res.about);
             })
             .catch((err) => {
                 console.log(err);
-        });
+            })
+            .finally(() => {
+                profilePopup._submitButton.textContent = 'Сохранить'
+            });
         profilePopup.close();
     }, profilePopupSelector)
 
@@ -77,13 +91,17 @@ const profilePopupValidator = new FormValidator({
 )
 const addCardPopup = new PopupWithForm(
     function (inputValues) {
+        addCardPopup._submitButton.textContent = 'Сохранение...'
         api.addNewCard(inputValues.imageName, inputValues.imageUrl)
             .then((res) => {
                 cardRenderer(res);
             })
             .catch((err) => {
                 console.log(err);
-        });
+            })
+            .finally(() => {
+                addCardPopup._submitButton.textContent = 'Сохранить'
+            });
         addCardPopup.close();
     }, cardPopupSelector)
 
@@ -96,16 +114,20 @@ const addCardPopupValidator = new FormValidator({
 )
 
 const deleteConfigmationPopup = new PopupWithConfirmation(
-    function (card, cardId) {
-        api.deleteCard(cardId)
+    function (card) {
+        deleteConfigmationPopup._submitButton.textContent = 'Удаление...'
+        api.deleteCard(card.cardId)
             .then(() => {
-                card.remove();
-                card = null;
+                card._element.remove();
+                card._element = null;
                 deleteConfigmationPopup.close();
             })
             .catch((err) => {
                 console.log(err);
-        });
+            })
+            .finally(() => {
+                deleteConfigmationPopup._submitButton.textContent = 'Ок'
+            });
     }, deletePopupSelector)
 
 function createCard(element) {
@@ -114,8 +136,31 @@ function createCard(element) {
         handleCardClick: (name, url) => {
             imagePopup.open(name, url);
         },
-        handleDeleteClick: (card, cardId) => {
-            deleteConfigmationPopup.open(card, cardId);
+        handleDeleteClick: (card) => {
+            deleteConfigmationPopup.open(card);
+        },
+        handleLikeClick: (card) => {
+            if (!card._isLiked) {
+                api.addLikeToCard(card.cardId)
+                    .then((res) => {
+                        card._likeButton.classList.toggle('element__button_liked');
+                        card._likeCount.textContent = res.likes.length;
+                        card._isLiked = true;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                });
+            } else {
+                api.removeLikeFromCard(card.cardId)
+                    .then((res) => {
+                        card._likeButton.classList.toggle('element__button_liked');
+                        card._likeCount.textContent = res.likes.length;
+                        card._isLiked = false;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                });
+            }
         }
     }, matrixTemplateSelector, userInfo.getUserId())
     return card.generateCard();
@@ -169,7 +214,7 @@ function setUserInfo() {
     api.getUserInfo()
         .then((result) => {
             userInfo.setUserInfo(result.name, result.about);
-            userInfo.setUserAvatar({avatarUrl: result.avatar});
+            userInfo.setUserAvatar(result.avatar);
             userInfo.setUserId(result._id);
         })
         .catch((err) => {

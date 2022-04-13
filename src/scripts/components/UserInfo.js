@@ -16,9 +16,17 @@ export default class UserInfo {
         return {avatarUrl: this._avatar.src}
     }
 
-    setUserInfo({userName, userDescription}) {
+    setUserInfo(userName, userDescription) {
         this._profileName.textContent = userName;
         this._profileDescription.textContent = userDescription;
+    }
+
+    setUserId(id) {
+        this._id = id
+    }
+
+    getUserId() {
+        return this._id
     }
 
     setUserAvatar({avatarUrl}) {

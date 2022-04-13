@@ -14,12 +14,14 @@ import { cardAddButtonSelector,
     popupTextInputSelector, 
     submitButtonSelector, 
     inputErrorClass, 
-    errorClassVisible } from "../scripts/utils/constants";
+    errorClassVisible, 
+    deletePopupSelector} from "../scripts/utils/constants";
 import './index.css';
 import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
 import UserInfo from "../scripts/components/UserInfo";
 import FormValidator from "../scripts/components/FormValidator";
+import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation";
 
 
 const imagePopup = new PopupWithImage(popupImageSelector);
@@ -60,6 +62,12 @@ const addCardPopupValidator = new FormValidator({
     errorClassVisible}, '.popup-card'
 )
 
+const deleteConfigmationPopup = new PopupWithConfirmation(
+    function (card) {
+        card.remove();
+        card = null;
+        deleteConfigmationPopup.close();
+    }, deletePopupSelector)
 
 function createCard(element) {
     const card = new Card({
@@ -67,6 +75,9 @@ function createCard(element) {
         url: element.link,
         handleCardClick: (name, url) => {
             imagePopup.open(name, url);
+        },
+        handleDeleteClick: (card) => {
+            deleteConfigmationPopup.open(card);
         }
     }, matrixTemplateSelector)
     return card.generateCard();
@@ -94,6 +105,7 @@ function setEventListeners() {
     addCardPopup.setEventListeners();
     profilePopup.setEventListeners();
     imagePopup.setEventListeners();
+    deleteConfigmationPopup.setEventListeners();
 }
 
 function enableValidation() {

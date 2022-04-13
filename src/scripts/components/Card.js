@@ -1,8 +1,9 @@
 export default class Card {
-    constructor({name, url, handleCardClick}, templateSelector) {
+    constructor({name, url, handleCardClick, handleDeleteClick}, templateSelector) {
         this._name = name;
         this._url = url;
         this._handleCardClick = handleCardClick;
+        this._handleDeleteClick = handleDeleteClick;
         this._templateSelector = templateSelector;
     }
 
@@ -34,8 +35,9 @@ export default class Card {
 
         const deleteButton = this._element.querySelector('.element__delete-button');
         deleteButton.addEventListener('click', (evt) => {
-            this._element.remove();
-            this._element = null;
+            // this._element.remove();
+            // this._element = null;
+            this._handleDeleteClick(this._element);
         });
 
         this._image.addEventListener('click', (evt) => {

@@ -35,6 +35,8 @@ export const profileDescriptionSelector = '.profile__description';
 
 export const cardPopupSelector = '.popup-card';
 
+export const deletePopupSelector = '.popup-delete'
+
 export const popupTextInputSelector = '.popup__text-input';
 export const popupFormSelector = '.popup__form';
 export const submitButtonSelector = '.popup__submit-button';

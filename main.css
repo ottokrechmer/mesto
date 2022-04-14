@@ -7,7 +7,7 @@
 .profile{display:flex;flex-direction:row;justify-content:space-between;margin:40px auto 0}@media (max-width:767px){.profile{align-items:center;flex-direction:column}}
 .profile__info{display:grid;gap:16px 30px;grid-template-areas:"avatar name" "avatar description";grid-template-columns:repeat(2,-webkit-max-content);grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(2,-webkit-max-content);grid-template-rows:repeat(2,max-content)}@media (max-width:767px){.profile__info{gap:0;grid-template-areas:"avatar" "name" "description";grid-template-columns:repeat(1,-webkit-max-content);grid-template-columns:repeat(1,max-content);grid-template-rows:repeat(3,-webkit-max-content);grid-template-rows:repeat(3,max-content);justify-items:center}}
 .profile__avatar-container{grid-area:avatar;position:relative}.profile__avatar-container:hover .profile__avatar{opacity:.2;transition:opacity .5s ease}.profile__avatar-container:hover .profile__avatar-edit{display:block}
-.profile__avatar{border-radius:50%;height:120px;width:120px}
+.profile__avatar{border-radius:50%;height:120px;-o-object-fit:cover;object-fit:cover;width:120px}
 .profile__avatar-edit{display:none;left:47px;position:absolute;top:47px}
 .profile__user{align-items:flex-end;display:flex;flex-direction:row;justify-content:space-between;max-width:420px}@media (max-width:425px){.profile__user{max-width:282px}}
 .profile__name{font-size:42px;font-weight:500;grid-area:name;line-height:48px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media (max-width:767px){.profile__name{margin:26px auto 0}}@media (max-width:320px){.profile__name{font-size:27px;font-weight:500;line-height:33px;max-width:282px}}
@@ -18,7 +18,7 @@
 .elements{display:grid;gap:17px;grid-auto-rows:361px;grid-template-columns:repeat(auto-fit,minmax(282px,1fr));margin:51px auto 0}@media (max-width:375px){.elements{margin:36px auto 0;row-gap:20px}}
 .element{background-color:#fff;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;position:relative}
 .element__delete-button{background-color:transparent;background-image:url(823b0cf1b0b7e9cb7cad.svg);background-position:50%;background-repeat:no-repeat;border:none;cursor:pointer;height:18px;padding:0;position:absolute;right:20px;top:20px;width:18px}.element__delete-button:hover{opacity:60%;transition:opacity 1s}
-.element__image{min-height:282px;width:100%}
+.element__image{min-height:282px;-o-object-fit:cover;object-fit:cover;width:100%}
 .element__description{align-items:center;display:flex;flex-direction:row;gap:15px;justify-content:space-between;margin:22px 20px}
 .element__likes{display:flex;flex-direction:column;gap:3px}
 .element__like-count{align-self:center;color:#000;font-size:13px;line-height:16px;margin:0}

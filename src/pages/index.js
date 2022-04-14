@@ -9,14 +9,10 @@ import { cardAddButtonSelector,
     profileEditButtonSelector, 
     profileNameSelector, 
     profilePopupSelector,
-    inactiveButtonClass, 
-    popupTextInputSelector, 
-    submitButtonSelector, 
-    inputErrorClass, 
-    errorClassVisible, 
     deletePopupSelector,
     avatarSelector,
-    avatarPopupSelector} from "../scripts/utils/constants";
+    avatarPopupSelector,
+    validationObject} from "../scripts/utils/constants";
 import './index.css';
 import PopupWithImage from "../scripts/components/PopupWithImage";
 import PopupWithForm from "../scripts/components/PopupWithForm";
@@ -38,7 +34,7 @@ const cardAddButton = document.querySelector(cardAddButtonSelector);
 const avatar = document.querySelector(avatarSelector);
 const userInfo = new UserInfo(profileNameSelector, profileDescriptionSelector, avatarSelector);
 const section = new Section({
-    renderer: cardRenderer
+    renderer: renderCard
 }, cardListSelector)
 
 const avatarPopup = new PopupWithForm(
@@ -47,6 +43,7 @@ const avatarPopup = new PopupWithForm(
         api.editUserAvatar(inputValues.avatarUrl)
             .then((res) => {
                 userInfo.setUserAvatar(res.avatar);
+                avatarPopup.close();
             })
             .catch((err) => {
                 console.log(err);
@@ -54,16 +51,9 @@ const avatarPopup = new PopupWithForm(
             .finally(() => {
                 avatarPopup._submitButton.textContent = 'Сохранить'
             });
-        avatarPopup.close();
     }, avatarPopupSelector)
 
-const avatarPopupValidator = new FormValidator({
-    inactiveButtonClass, 
-    popupTextInputSelector, 
-    submitButtonSelector, 
-    inputErrorClass, 
-    errorClassVisible}, '.popup-avatar'
-)
+const avatarPopupValidator = new FormValidator(validationObject, '.popup-avatar')
 
 const profilePopup = new PopupWithForm(
     function (inputValues) {
@@ -71,6 +61,7 @@ const profilePopup = new PopupWithForm(
         api.editUserProfile(inputValues.userName, inputValues.userDescription)
             .then((res) => {
                 userInfo.setUserInfo(res.name, res.about);
+                profilePopup.close();
             })
             .catch((err) => {
                 console.log(err);
@@ -78,22 +69,18 @@ const profilePopup = new PopupWithForm(
             .finally(() => {
                 profilePopup._submitButton.textContent = 'Сохранить'
             });
-        profilePopup.close();
     }, profilePopupSelector)
 
-const profilePopupValidator = new FormValidator({
-    inactiveButtonClass, 
-    popupTextInputSelector, 
-    submitButtonSelector, 
-    inputErrorClass, 
-    errorClassVisible}, '.popup-profile'
-)
+const profilePopupValidator = new FormValidator(validationObject, '.popup-profile')
+
 const addCardPopup = new PopupWithForm(
     function (inputValues) {
         addCardPopup._submitButton.textContent = 'Сохранение...'
         api.addNewCard(inputValues.imageName, inputValues.imageUrl)
             .then((res) => {
-                cardRenderer(res);
+                renderCard(res);
+                addCardPopup.close();
+                addCardPopupValidator.enableValidation();
             })
             .catch((err) => {
                 console.log(err);
@@ -101,24 +88,16 @@ const addCardPopup = new PopupWithForm(
             .finally(() => {
                 addCardPopup._submitButton.textContent = 'Сохранить'
             });
-        addCardPopup.close();
     }, cardPopupSelector)
 
-const addCardPopupValidator = new FormValidator({
-    inactiveButtonClass, 
-    popupTextInputSelector, 
-    submitButtonSelector, 
-    inputErrorClass, 
-    errorClassVisible}, '.popup-card'
-)
+const addCardPopupValidator = new FormValidator(validationObject, '.popup-card')
 
 const deleteConfigmationPopup = new PopupWithConfirmation(
     function (card) {
         deleteConfigmationPopup._submitButton.textContent = 'Удаление...'
         api.deleteCard(card.cardId)
             .then(() => {
-                card._element.remove();
-                card._element = null;
+                card.deleteCard();
                 deleteConfigmationPopup.close();
             })
             .catch((err) => {
@@ -165,20 +144,9 @@ function createCard(element) {
     return card.generateCard();
 }
 
-function cardRenderer(element) {
+function renderCard(element) {
     const cardElement = createCard(element);
     section.addItem(cardElement);
-}
-
-function setInitialCardList() {
-    api.getCardList()
-        .then((res) => {
-            section.setItems(res);
-            section.render();
-        })
-        .catch((err) => {
-            console.log(err);
-    });
 }
 
 function setEventListeners() {
@@ -209,20 +177,23 @@ function enableValidation() {
     avatarPopupValidator.enableValidation();
 }
 
-function setUserInfo() {
-    api.getUserInfo()
-        .then((result) => {
-            userInfo.setUserInfo(result.name, result.about);
-            userInfo.setUserAvatar(result.avatar);
-            userInfo.setUserId(result._id);
-        })
-        .catch((err) => {
-            console.log(err);
-    });
+function getInitPageData() {
+    Promise.all([
+        api.getUserInfo(),
+        api.getCardList()
+    ])
+    .then((values) => {
+        userInfo.setUserInfo(values[0].name, values[0].about);
+        userInfo.setUserAvatar(values[0].avatar);
+        userInfo.setUserId(values[0]._id);
+        section.setItems(values[1]);
+        section.render();
+    })
+    .catch((err) => {
+        console.log(err);
+    })
 }
 
-
-setInitialCardList();
+getInitPageData();
 setEventListeners();
 enableValidation();
-setUserInfo();

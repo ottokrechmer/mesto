@@ -10,6 +10,7 @@ export default class FormValidator {
 
     enableValidation() {
         this._form.addEventListener('submit', function (evt) {
+            // Нет, я делаю preventDefault только в PopupWithConfirmation, так как у него нет инпутов и, следовательно, нет класса-валидатора.
             evt.preventDefault();
         });
         this._setEventListeners();

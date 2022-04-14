@@ -21,3 +21,11 @@ export const errorClass = 'popup__error';
 export const errorClassVisible = 'popup__error_visible';
 export const cardListSelector = '.elements';
 export const matrixTemplateSelector = '#matrix-element-template';
+
+export const validationObject = {
+    inactiveButtonClass, 
+    popupTextInputSelector, 
+    submitButtonSelector, 
+    inputErrorClass, 
+    errorClassVisible
+}

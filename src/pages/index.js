@@ -80,7 +80,8 @@ const addCardPopup = new PopupWithForm(
             .then((res) => {
                 renderCard(res);
                 addCardPopup.close();
-                addCardPopupValidator.enableValidation();
+                // Спасибо большое, простите, уже, видимо, голова не варит :)
+                addCardPopupValidator.toggleButtonState();
             })
             .catch((err) => {
                 console.log(err);
